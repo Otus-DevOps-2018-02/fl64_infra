@@ -431,11 +431,9 @@ appserver | SUCCESS => {
 Например: http://35.204.131.204:9292
 В окне веб браузера отобразится установленное приложение.
 
-
-
 # 11. Homework-11: Ansible-3
 
-[![Build Status](https://travis-ci.org/fl64/trytravisrepo.svg?branch=ansible-3)](https://travis-ci.org/fl64/trytravisrepo)
+[![Build Status](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra.svg?branch=ansible-3)](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra)
 
 ## 11.1 What was done
 - созданы ansible-роли app, db, users (создаются пользователи для {prod,stage} окружений)
