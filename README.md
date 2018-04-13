@@ -447,6 +447,7 @@ appserver | SUCCESS => {
 - созданы тесты для TravisCI, для проверки ветки "ansible-3". Осуществляется проверка:
   - валидация шаблонов packer
   - валидация конфигураций terraform и ansible
+  - промежуточное тестирование осуществлялось с использованием trytravis
 
 ## 11.2 How to run the project
 
@@ -465,3 +466,12 @@ appserver | SUCCESS => {
 С использованием веб-браузера перейти по адресу указанному в выводе команды.
 Например: http://35.204.131.204:112112
 В окне веб браузера отобразится установленное приложение.
+ try
+Как проверить TravisCI (на память):
+- создать github репозиторий
+- в https://travis-ci.org/profile/username включить созданный репозиторий
+- проверить наличие подключения TravisCI: https://github.com/fl64/trytravisrepo/settings/installations
+- `pip install trytravis`
+- `cd $created_repo`
+- `trytravis --repo ssh://git@github.com/username/created_repo`
+для проведения прогона TravisCI, выполнить: `trytravis` в тестируемом репозитории
