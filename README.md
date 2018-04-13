@@ -37,10 +37,12 @@
     - [10.2 Brief description of the solution ](#102-Brief-description-of-the-solution)
     - [10.3 How to run the project](#103-how-to-run-the-project)
     - [10.4 How to check](#104-how-to-check)
-- [9. Homework-9: Ansible-1](#9-homework-9-ansible-1)
-    - [9.1 What was done](#91-what-was-done)
-    - [9.2 How to run the project](#92-how-to-run-the-project)
-    - [9.3 How to check](#93-how-to-check)
+- [11. Homework-11: Ansible-3](#11-homework-11-ansible-3)
+    - [11.1 What was done](#111-what-was-done)
+    - [11.2 How to run the project](#112-how-to-run-the-project)
+    - [11.3 How to check](#113-how-to-check)
+
+
 # 4. Homework-4: Intro in GCP
 
 ## 4.1 Description
@@ -207,11 +209,11 @@ packer build ubuntu16.json
 ```
 cd packer
 packer validate \
-       -var 'prj_id=infra-918313' \
+       -var 'prj_id=infra-198313' \
        -var 'src_img_fam=ubuntu-1604-lts' \
        ubuntu16.json
 packer build \
-       -var 'prj_id=infra-918313' \
+       -var 'prj_id=infra-198313' \
        -var 'src_img_fam=ubuntu-1604-lts' \
        ubuntu16.json
 
@@ -241,8 +243,8 @@ ssh appuser@35.204.252.224 "bash -s" < config-scripts/deploy.sh
 - Запустить создание шаблона:
 ```
 cd packer
-packer validate -var 'prj_id=infra-918313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
-packer build -var 'prj_id=infra-918313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
+packer validate -var 'prj_id=infra-198313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
+packer build -var 'prj_id=infra-198313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
 ```
 - Создать и запустить ВМ (при создании ВМ спользуется последний из соданных шаблонов reddit-full):
 ```
@@ -355,7 +357,7 @@ resource "null_resource" "app" {
   - выполнить `curl ifconfig.me`
   - добавить IP-адрес из вывода предыдущей команды в main.tf (переменна source_ranges = ["xxx.xxx.xxx.xxx"])
   - выполнить `terraform apply`
-- cd $GIT_REPO_ROOT/ansible/
+- cd $GIT_REPO_ROOT/ansible/stage
   - выполнить `ansible all -m ping`
   - выполнить `ansible all -m ping -i ./inventory`
   - выполнить `ansible all -m ping -i ./inventory.yml`
@@ -429,11 +431,13 @@ appserver | SUCCESS => {
 Например: http://35.204.131.204:9292
 В окне веб браузера отобразится установленное приложение.
 
-# 9. Homework-9: Ansible-3
+
+
+# 11. Homework-11: Ansible-3
 
 [![Build Status](https://travis-ci.org/fl64/trytravisrepo.svg?branch=ansible-3)](https://travis-ci.org/fl64/trytravisrepo)
 
-## 9.1 What was done
+## 11.1 What was done
 - созданы ansible-роли app, db, users (создаются пользователи для {prod,stage} окружений)
 - созданы окружения {prod,stage}
 - организован каталог ansible
@@ -449,7 +453,7 @@ appserver | SUCCESS => {
   - валидация конфигураций terraform и ansible
   - промежуточное тестирование осуществлялось с использованием trytravis
 
-## 9.2 How to run the project
+## 11.2 How to run the project
 
 - cd $GIT_REPO_ROOT/terraform/stage
   - выполнить `curl ifconfig.me`
@@ -459,7 +463,7 @@ appserver | SUCCESS => {
   - выполнить `ansible playbooks/site.yml`
 - Done!
 
-## 9.3 How to check
+## 11.3 How to check
 
 Выполнтиь `terraform output app_external_ip`
 
