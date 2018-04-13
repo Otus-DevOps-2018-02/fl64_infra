@@ -28,16 +28,19 @@
     - [8.2 Brief description of the solution ](#82-Brief-description-of-the-solution)
     - [8.3 How to run the project](#83-how-to-run-the-project)
     - [8.4 How to check](#84-how-to-check)
-- [9. Homework-9: Ansible-1](#9-homework-9-ansible-1)
-    - [9.1 What was done](#91-what-was-done)
-    - [9.2 How to run the project](#92-how-to-run-the-project)
-    - [9.3 How to check](#93-how-to-check)
+- [11. Homework-11: Ansible-1](#11-homework-11-ansible-1)
+    - [11.1 What was done](#111-what-was-done)
+    - [11.2 How to run the project](#112-how-to-run-the-project)
+    - [11.3 How to check](#113-how-to-check)
 - [10. Homework-10: Ansible-2](#10-homework-10-ansible-2)
     - [10.1 What was done](#101-what-was-done)
     - [10.2 Brief description of the solution ](#102-Brief-description-of-the-solution)
     - [10.3 How to run the project](#103-how-to-run-the-project)
     - [10.4 How to check](#104-how-to-check)
-
+- [11. Homework-11: Ansible-1](#11-homework-11-ansible-1)
+    - [11.1 What was done](#111-what-was-done)
+    - [11.2 How to run the project](#112-how-to-run-the-project)
+    - [11.3 How to check](#113-how-to-check)
 # 4. Homework-4: Intro in GCP
 
 ## 4.1 Description
@@ -114,9 +117,9 @@ ssh someinternalhost
 
 ## 5.1 Description
 
-testapp_IP = 35.204.89.147
+testapp_IP = 35.204.811.147
 
-testapp_port = 9292
+testapp_port = 112112
 
 ## 5.2 What was done
 - перенесены скритпы установки и конфиги VPN в каталог VPN
@@ -151,14 +154,14 @@ gcloud compute instances create reddit-app\
   --machine-type=g1-small \
   --tags puma-server \
   --restart-on-failure
-  --metadata startup-script-url=https://gist.githubusercontent.com/fl64/e1b838ebe8e142d449ef4435e7a43ff7/raw/676c9fe32b17541a63b80398779ec1bf42fa5bbb/startup.sh
+  --metadata startup-script-url=https://gist.githubusercontent.com/fl64/e1b838ebe8e142d4411ef4435e7a43ff7/raw/676c11fe32b17541a63b8031187711ec1bf42fa5bbb/startup.sh
 
 ```
 
 Создание правил МЭ:
 ```
 gcloud compute firewall-rules create default-puma-server \
-  --allow=tcp:9292 \
+  --allow=tcp:112112 \
   --target-tags=puma-server \
   --description="Allow access to puma server"
 ```
@@ -166,7 +169,7 @@ gcloud compute firewall-rules create default-puma-server \
 
 ## 5.4 How to check
 
-В веб-браузере перейти по адресу http://35.204.89.147:9292, в окне браузера отобразится интерфейс приложения.
+В веб-браузере перейти по адресу http://35.204.811.147:112112, в окне браузера отобразится интерфейс приложения.
 
 ## 5.5 How do remove
 
@@ -204,11 +207,11 @@ packer build ubuntu16.json
 ```
 cd packer
 packer validate \
-       -var 'prj_id=infra-198313' \
+       -var 'prj_id=infra-1118313' \
        -var 'src_img_fam=ubuntu-1604-lts' \
        ubuntu16.json
 packer build \
-       -var 'prj_id=infra-198313' \
+       -var 'prj_id=infra-1118313' \
        -var 'src_img_fam=ubuntu-1604-lts' \
        ubuntu16.json
 
@@ -220,7 +223,7 @@ packer build -var-file=variables.json ubuntu16.json
 - Создать правила для МЭ (если отсуствуют)
 ```
 gcloud compute firewall-rules create default-puma-server \
-  --allow=tcp:9292 \
+  --allow=tcp:112112 \
   --target-tags=puma-server \
   --description="Allow access to puma server"
 ```
@@ -238,8 +241,8 @@ ssh appuser@35.204.252.224 "bash -s" < config-scripts/deploy.sh
 - Запустить создание шаблона:
 ```
 cd packer
-packer validate -var 'prj_id=infra-198313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
-packer build -var 'prj_id=infra-198313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
+packer validate -var 'prj_id=infra-1118313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
+packer build -var 'prj_id=infra-1118313' -var 'src_img_fam=ubuntu-1604-lts' immutable.json
 ```
 - Создать и запустить ВМ (при создании ВМ спользуется последний из соданных шаблонов reddit-full):
 ```
@@ -247,7 +250,7 @@ config-scripts/create-reddit-vm.sh
 ```
 
 ## 6.3 How to check
-С использованием веб-браузера перейти по адресу http://внешний-адрес-ВМ:9292 (Например: https://35.204.252.224:9292 ).
+С использованием веб-браузера перейти по адресу http://внешний-адрес-ВМ:112112 (Например: https://35.204.252.224:112112 ).
 В окне веб браузера отобразится установленное приложение.
 
 # 7. Homework-7: Terraform
@@ -338,28 +341,28 @@ resource "null_resource" "app" {
 С использованием веб-браузера перейти по адресу указанному в выводе команды.
 В окне веб браузера отобразится установленное приложение.
 
-# 9. Homework-9: Ansible-1
-## 9.1 What was done
+# 11. Homework-11: Ansible-1
+## 11.1 What was done
 - создан каталог ansible
 - созданы файл конфигурации и инвентори файлы (ini, yml, json*) для ansible
 
 В рамках задания со *:
 - создан скрипт на bash позволяющий передать json-inventory в ansible
 
-## 9.2 How to run the project
+## 11.2 How to run the project
 
 - cd $GIT_REPO_ROOT/terraform/stage
   - выполнить `curl ifconfig.me`
   - добавить IP-адрес из вывода предыдущей команды в main.tf (переменна source_ranges = ["xxx.xxx.xxx.xxx"])
   - выполнить `terraform apply`
-- cd $GIT_REPO_ROOT/ansible/stage
+- cd $GIT_REPO_ROOT/ansible/
   - выполнить `ansible all -m ping`
   - выполнить `ansible all -m ping -i ./inventory`
   - выполнить `ansible all -m ping -i ./inventory.yml`
   - выполнить `ansible all -m ping -i ./showmejson.sh`
 - Done!
 
-## 9.3 How to check
+## 11.3 How to check
 
 Резульататы выполнения ansible должны показать нечто похожее:
 
@@ -423,6 +426,42 @@ appserver | SUCCESS => {
 Выполнтиь `terraform output app_external_ip`
 
 С использованием веб-браузера перейти по адресу указанному в выводе команды.
-Например: http://35.204.131.204:9292
+Например: http://35.204.131.204:112112
 В окне веб браузера отобразится установленное приложение.
 
+# 11. Homework-11: Ansible-3
+
+[![Build Status](https://travis-ci.org/fl64/trytravisrepo.svg?branch=ansible-3)](https://travis-ci.org/fl64/trytravisrepo)
+
+## 11.1 What was done
+- созданы ansible-роли app, db, users (создаются пользователи для {prod,stage} окружений)
+- созданы окружения {prod,stage}
+- организован каталог ansible
+  - плейбуки перенесены в $GIT_REPO_ROOT/ansible/playbooks
+  - прочие файлы перенесены в $GIT_REPO_ROOT/ansible/old
+- созданы файл конфигурации и инвентори файлы (ini, yml, json*) для ansible
+- по умолчанию в качестве инвенатря используется скрипт для генерации динамического инвентаря
+- добавлена иконка со статусом билда
+В рамках задания со *:
+- созданы динамические inventory-файлы для окружений {prod,stage}
+- созданы тесты для TravisCI, для проверки ветки "ansible-3". Осуществляется проверка:
+  - валидация шаблонов packer
+  - валидация конфигураций terraform и ansible
+
+## 11.2 How to run the project
+
+- cd $GIT_REPO_ROOT/terraform/stage
+  - выполнить `curl ifconfig.me`
+  - добавить IP-адрес из вывода предыдущей команды в main.tf (переменна source_ranges = ["xxx.xxx.xxx.xxx"])
+  - выполнить `terraform apply`
+- cd $GIT_REPO_ROOT/ansible/
+  - выполнить `ansible playbooks/site.yml`
+- Done!
+
+## 11.3 How to check
+
+Выполнтиь `terraform output app_external_ip`
+
+С использованием веб-браузера перейти по адресу указанному в выводе команды.
+Например: http://35.204.131.204:112112
+В окне веб браузера отобразится установленное приложение.
