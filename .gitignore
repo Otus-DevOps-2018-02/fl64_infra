@@ -17,5 +17,5 @@ vault.key
 .venv/
 
 #ignore imported roles
-ansible/roles/db
+ansible/roles/db/
 jdauphant.nginx
