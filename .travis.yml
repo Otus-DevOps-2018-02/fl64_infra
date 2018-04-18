@@ -32,7 +32,7 @@ install:
 script:
 - packer validate -var-file=packer/variables.json.example packer/db.json
 - packer validate -var-file=packer/variables.json.example packer/app.json
-- ansible-lint ./ansible/playbooks/site.yml
+- ansible-lint /ansible/playbooks/site.yml
 - cd terraform/${GETENV}
 - terraform init -backend=false;
 - terraform validate --var-file=terraform.tfvars.example;
