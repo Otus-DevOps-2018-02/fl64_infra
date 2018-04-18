@@ -1,3 +1,7 @@
 ---
 - src: jdauphant.nginx
   version: v2.13
+
+- src: https://github.com/fl64/devnullops-db-ansible-role
+  name: db
+  version: master

@@ -1,0 +1,5 @@
+---
+# handlers file for deploy
+
+- name: restart puma
+  systemd: name=puma state=restarted

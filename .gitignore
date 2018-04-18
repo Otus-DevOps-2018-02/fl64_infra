@@ -5,7 +5,6 @@
 .terraform/
 *.retry
 variables.json
-jdauphant.nginx
 vault.key
 
 #Vagrant and molecule
@@ -16,3 +15,7 @@ vault.key
 .cache
 .pytest_cache
 .venv/
+
+#ignore imported roles
+ansible/roles/db
+jdauphant.nginx

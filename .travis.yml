@@ -9,6 +9,8 @@ before_install:
 brahches:
   only:
     - ansible-3
+    - ansible-4
+    - master
 
 env:
   matrix:
