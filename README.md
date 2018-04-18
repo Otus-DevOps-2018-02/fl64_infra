@@ -37,6 +37,11 @@
     - [10.2 Brief description of the solution ](#102-Brief-description-of-the-solution)
     - [10.3 How to run the project](#103-how-to-run-the-project)
     - [10.4 How to check](#104-how-to-check)
+- [11. Homework-11: Ansible-3](#11-homework-11-ansible-3)
+    - [11.1 What was done](#111-what-was-done)
+    - [11.2 How to run the project](#112-how-to-run-the-project)
+    - [11.3 How to check](#113-how-to-check)
+
 
 # 4. Homework-4: Intro in GCP
 
@@ -426,3 +431,49 @@ appserver | SUCCESS => {
 Например: http://35.204.131.204:9292
 В окне веб браузера отобразится установленное приложение.
 
+# 11. Homework-11: Ansible-3
+
+[![Build Status](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra.svg?branch=ansible-3)](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra)
+
+## 11.1 What was done
+- созданы ansible-роли app, db, users (создаются пользователи для {prod,stage} окружений)
+- созданы окружения {prod,stage}
+- организован каталог ansible
+  - плейбуки перенесены в $GIT_REPO_ROOT/ansible/playbooks
+  - прочие файлы перенесены в $GIT_REPO_ROOT/ansible/old
+- созданы файл конфигурации и инвентори файлы (ini, yml, json*) для ansible
+- по умолчанию в качестве инвенатря используется скрипт для генерации динамического инвентаря
+- добавлена иконка со статусом билда
+В рамках задания со *:
+- созданы динамические inventory-файлы для окружений {prod,stage}
+- созданы тесты для TravisCI, для проверки ветки "ansible-3". Осуществляется проверка:
+  - валидация шаблонов packer
+  - валидация конфигураций terraform и ansible
+  - промежуточное тестирование осуществлялось с использованием trytravis
+
+## 11.2 How to run the project
+
+- cd $GIT_REPO_ROOT/terraform/stage
+  - выполнить `curl ifconfig.me`
+  - добавить IP-адрес из вывода предыдущей команды в main.tf (переменна source_ranges = ["xxx.xxx.xxx.xxx"])
+  - выполнить `terraform apply`
+- cd $GIT_REPO_ROOT/ansible/
+  - выполнить `ansible playbooks/site.yml`
+- Done!
+
+## 11.3 How to check
+
+Выполнтиь `terraform output app_external_ip`
+
+С использованием веб-браузера перейти по адресу указанному в выводе команды.
+Например: http://35.204.131.204:9292
+В окне веб браузера отобразится установленное приложение.
+ try
+Как проверить TravisCI (на память):
+- создать github репозиторий
+- в https://travis-ci.org/profile/username включить созданный репозиторий
+- проверить наличие подключения TravisCI: https://github.com/fl64/trytravisrepo/settings/installations
+- `pip install trytravis`
+- `cd $created_repo`
+- `trytravis --repo ssh://git@github.com/username/created_repo`
+для проведения прогона TravisCI, выполнить: `trytravis` в тестируемом репозитории
