@@ -1,6 +1,6 @@
+[![Build Status](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra.svg?branch=ansible-3)](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra)
+
 # Table of content
-
-
 
 - [Table of content](#table-of-content)
 - [4. Homework-4: Intro in GCP](#4-homework-4-intro-in-gcp)
@@ -41,7 +41,10 @@
     - [11.1 What was done](#111-what-was-done)
     - [11.2 How to run the project](#112-how-to-run-the-project)
     - [11.3 How to check](#113-how-to-check)
-
+- [12. Homework-12: Ansible-4](#12-homework-12-ansible-4)
+    - [12.1 What was done](#121-what-was-done)
+    - [12.2 How to run the project](#122-how-to-run-the-project)
+    - [12.3 How to check](#123-how-to-check)
 
 # 4. Homework-4: Intro in GCP
 
@@ -84,7 +87,7 @@ ssh -i ~/.ssh/appuser -J appuser@35.204.252.224 appuser@10.164.0.3
 
 ## 4.3 Additional homework
 
-> **Доп. задание: ** Предложить вариант решения для подключения из консоли при помощи команды вида ssh internalhost из локальной консоли рабочего устройства, чтобы подключение выполнялось по алиасу internalhost и внести его в README.md в вашем репозитории
+> **Доп. задание:** Предложить вариант решения для подключения из консоли при помощи команды вида ssh internalhost из локальной консоли рабочего устройства, чтобы подключение выполнялось по алиасу internalhost и внести его в README.md в вашем репозитории
 
 Добавиьт следующие варианты в ~/.ssh/config
 
@@ -433,8 +436,6 @@ appserver | SUCCESS => {
 
 # 11. Homework-11: Ansible-3
 
-[![Build Status](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra.svg?branch=ansible-3)](https://travis-ci.org/Otus-DevOps-2018-02/fl64_infra)
-
 ## 11.1 What was done
 - созданы ansible-роли app, db, users (создаются пользователи для {prod,stage} окружений)
 - созданы окружения {prod,stage}
@@ -477,3 +478,59 @@ appserver | SUCCESS => {
 - `cd $created_repo`
 - `trytravis --repo ssh://git@github.com/username/created_repo`
 для проведения прогона TravisCI, выполнить: `trytravis` в тестируемом репозитории
+
+
+## 12.1 What was done
+- создано локальное окружение с использованием Vagrnat, в качестве провижионера используется ansible;
+- доработаны роли для работы с Vagrant, доработаны json файлы с конфигами packer для совместимости;
+- для деполя создана роль deploy
+В рамках задания со *:
+- конфигурация Vagrant предусматривает переменные для применения роли Nginx
+
+- создано локальное окружение пользователя для работы с molecule
+Проблема: c virtualenv решение не взлетело из-за отсуствия библиотек libselinux-python (из pip просто так не ставится), но при установке через `pip install --user ...` все работет норм.
+- созданы тесты и протестирована конфигурация
+В рамках задания со *:
+- роль db вынесена в отдельный репозиторий https://github.com/fl64/devnullops-db-ansible-role/
+- настроен TravisCI для тестирования роли в GCE
+
+Для истории прикладываю порядок действий для прикручивания travisCI к созданному репозиторию с ролью.
+
+```
+1. ssh-keygen -t rsa -f google_compute_engine -C 'travis' -q -N ''
+2. Добавить созданный ключ в метадату проекта
+3. Добавляем сервисный аккаунт: gcloud iam service-accounts create travisci --display-name "TravisCI GPC service account"
+4. Переходим в GCP API and Services --> Credentials --> Create ... --> Service account key, и выгружаем credentials.json
+5. Добавляем email в IAM для доступа к проекту
+6. travis encrypt GCE_SERVICE_ACCOUNT_EMAIL='travisci@infra-198313.iam.gserviceaccount.com' --add
+7. travis encrypt GCE_PROJECT_ID='infra-198313' --add
+8. travis encrypt GCE_CREDENTIALS_FILE="$(pwd)/credentials.json" --add
+9. tar cvf secrets.tar credentials.json google_compute_engine
+10. travis login
+11. travis encrypt-file secrets.tar --add
+
+12. Коммитим и пушим изменения
+13. Ждем :)
+
+```
+
+
+## 12.2 How to run the project
+
+Локальный запуск установки приложения:
+
+1. `git clone https://github.com/Otus-DevOps-2018-02/fl64_infra`
+2. `cd fl64_infra\ansible`
+3. `vagrant up`
+
+Запуск тестов:
+
+1. `cd fl64_infra\ansible\roles\db`
+2. `molecule create`
+3. `molecule converge`
+4. `molecule verify`
+4. `molecule destroy`
+
+## 11.3 How to check
+
+С использованием веб-браузера перейти по адресу 10.10.10.20.
